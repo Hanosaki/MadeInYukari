@@ -24,10 +24,13 @@
     <ClCompile Include="..\Classes\Splash.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Title.cpp">
+    <ClCompile Include="..\Classes\FileReadClass.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\FileReadClass.cpp">
+    <ClCompile Include="..\Classes\StringResouce.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Conveter.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,10 +47,13 @@
     <ClInclude Include="..\Classes\Splash.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Title.h">
+    <ClInclude Include="..\Classes\FileReadClass.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\FileReadClass.h">
+    <ClInclude Include="..\Classes\StringResouce.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Converter.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

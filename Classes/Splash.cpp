@@ -2,6 +2,8 @@
 #include "Splash.h"
 #include "SimpleAudioEngine.h"
 #include "HelloWorldScene.h"
+#include "StringResouce.h"
+#include "Converter.h"
 
 using namespace CocosDenshion;
 USING_NS_CC;
@@ -22,13 +24,14 @@ bool Splash::init()
 	auto director = Director::getInstance();
 	auto visibleSize = director->getVisibleSize();
 	auto origin = director->getVisibleOrigin();
-	char* seName = "se/Logo.mp3";
+	auto converter = new Converter;
+	char* seName = converter->replaceString2Char(SE_FOLDER + LOGO);
 	
 	SimpleAudioEngine::getInstance()->preloadEffect(seName);
 
 	auto logoText = FileUtils::getInstance()->getStringFromFile("text/logo.txt");
 
-	auto logo = Label::createWithTTF(logoText,"fonts/HGRPP1.TTC", 18);
+	auto logo = Label::createWithTTF(logoText,FONTS_FOLDER + JPN_FONT, 18);
 	logo->setTextColor(Color4B::WHITE);
 	logo->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
 	logo->setOpacity(0);
