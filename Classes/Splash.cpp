@@ -1,9 +1,9 @@
 ﻿#pragma execution_character_set("utf-8")
 #include "Splash.h"
 #include "SimpleAudioEngine.h"
-#include "HelloWorldScene.h"
 #include "StringResouce.h"
 #include "Converter.h"
+#include "Title.h"
 
 using namespace CocosDenshion;
 USING_NS_CC;
@@ -25,11 +25,11 @@ bool Splash::init()
 	auto visibleSize = director->getVisibleSize();
 	auto origin = director->getVisibleOrigin();
 	auto converter = new Converter;
-	char* seName = converter->replaceString2Char(SE_FOLDER + LOGO);
+	char* seName = converter->replaceString2Char(SE_FOLDER + LOGO_SE + MP3);
 	
 	SimpleAudioEngine::getInstance()->preloadEffect(seName);
 
-	auto logoText = FileUtils::getInstance()->getStringFromFile("text/logo.txt");
+	auto logoText = FileUtils::getInstance()->getStringFromFile(TEXT_FOLDER + LOGO_TEXT + TXT);
 
 	auto logo = Label::createWithTTF(logoText,FONTS_FOLDER + JPN_FONT, 18);
 	logo->setTextColor(Color4B::WHITE);
@@ -51,6 +51,6 @@ bool Splash::init()
 
 void Splash::callLoadScene(float dt)
 {
-	Director::getInstance()->replaceScene(HelloWorld::createScene());
+	Director::getInstance()->replaceScene(Title::createScene());
 }
 

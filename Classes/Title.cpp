@@ -1,6 +1,8 @@
 ﻿#pragma execution_character_set("utf-8")
 #include "Title.h"
 #include "SimpleAudioEngine.h"
+#include "StringResouce.h"
+#include "GenericFunction.h"
 
 using namespace CocosDenshion;
 USING_NS_CC;
@@ -23,7 +25,6 @@ bool Title::init()
 	auto visibleSize = directer->getVisibleSize();
 	auto origin = directer->getVisibleOrigin();
 	const auto BUTTON_SIZE = Size(visibleSize.width + origin.x, visibleSize.height / 10 + origin.y);
-	GenericFunc genericFunc;
 #pragma endregion
 
 	auto audioEngine = SimpleAudioEngine::getInstance();
@@ -34,30 +35,34 @@ bool Title::init()
 	audioEngine->setEffectsVolume(0.8f);
 
 #pragma region タイトル表記
-	auto titleLabel = Label::createWithTTF(TITLE_TEXT, F_FONTS + JPN_FONTS, 64);
+	auto titleText = FileUtils::getInstance()->getStringFromFile(TEXT_FOLDER + TITLE_TEXT + TXT);
+	auto titleLabel = Label::createWithTTF(titleText, FONTS_FOLDER + JPN_FONT, 24);
+	titleLabel->setScale(directer->getContentScaleFactor());
 	titleLabel->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - titleLabel->getContentSize().height*2);
 	titleLabel->setColor(Color3B::BLACK);
 	this->addChild(titleLabel, 4);
 #pragma endregion
 
 #pragma region 背景設定
-	auto backGround = Sprite::create(F_IMAGE + F_UI + OP_BACK_GROUND);
+	auto backGround = Sprite::create(IMAGE_FOLDER + ROOM + PNG);
 	backGround->setContentSize(directer->getVisibleSize());
 	backGround->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
 	this->addChild(backGround, 1);
 #pragma endregion
 
+	auto genericFunc = new GenericFunc;
+
 #pragma region 主人公(立ち絵)の初期設定
-	auto characterImage = genericFunc.setMainCharacterImage(visibleSize, origin, F_IMAGE + F_MAIN_CHARACTER + SMILE);
+	auto characterImage = genericFunc->setMainCharacterImage(visibleSize, origin, IMAGE_FOLDER + YUKARI + PNG);
 	characterImage->setTag(2);
 	this->addChild(characterImage, 3);
 #pragma endregion
 
 #pragma region 終了ボタン配置
-	auto endButton = Sprite::create(F_IMAGE + F_UI + END_BUTTON);
+	auto endButton = Sprite::create(IMAGE_FOLDER + END + PNG);
 	endButton->setContentSize(BUTTON_SIZE);
 
-	auto selectedEndButton = Sprite::create(F_IMAGE + F_UI + END_BUTTON);
+	auto selectedEndButton = Sprite::create(IMAGE_FOLDER + END + PNG);
 	selectedEndButton->setOpacity(128);
 	selectedEndButton->setContentSize(BUTTON_SIZE);
 
@@ -70,10 +75,10 @@ bool Title::init()
 #pragma endregion
 
 #pragma region クレジットボタン配置
-	auto creditButton = Sprite::create(F_IMAGE + F_UI + CREDIT_IMAGE);
+	auto creditButton = Sprite::create(IMAGE_FOLDER + CREDIT + PNG);
 	creditButton->setContentSize(BUTTON_SIZE);
 
-	auto selectedCreditButton = Sprite::create(F_IMAGE + F_UI + CREDIT_IMAGE);
+	auto selectedCreditButton = Sprite::create(IMAGE_FOLDER + CREDIT + PNG);
 	selectedCreditButton->setOpacity(128);
 	selectedCreditButton->setContentSize(BUTTON_SIZE);
 
@@ -87,10 +92,10 @@ bool Title::init()
 #pragma endregion
 
 #pragma region スタートボタン配置
-	auto startButton = Sprite::create(F_IMAGE + F_UI + START_BUTTON);
+	auto startButton = Sprite::create(IMAGE_FOLDER + START + PNG);
 	startButton->setContentSize(BUTTON_SIZE);
 
-	auto selectedStartButton = Sprite::create(F_IMAGE + F_UI + START_BUTTON);
+	auto selectedStartButton = Sprite::create(IMAGE_FOLDER + START + PNG);
 	selectedStartButton->setOpacity(128);
 	selectedStartButton->setContentSize(BUTTON_SIZE);
 
@@ -103,45 +108,41 @@ bool Title::init()
 	this->addChild(startMenu, 2);
 #pragma endregion
 
-	Converter converter;
-	auto bgmName = converter.replaceString2Char(F_BGM + TITLE_BGM + TYPE_MP3);
-	SimpleAudioEngine::getInstance()->playBackgroundMusic(bgmName, true);
+	//Converter converter;
+	//auto bgmName = converter.replaceString2Char(F_BGM + TITLE_BGM + TYPE_MP3);
+	//SimpleAudioEngine::getInstance()->playBackgroundMusic(bgmName, true);
 
 	return true;
 }
 
 void Title::characterImageChange()
 {
-	auto characterImage = (Sprite*)this->getChildByTag(2);
-	characterImage->setTexture(F_IMAGE + F_MAIN_CHARACTER + LAUGH);
+	//auto characterImage = (Sprite*)this->getChildByTag(2);
+	//characterImage->setTexture(F_IMAGE + F_MAIN_CHARACTER + LAUGH);
 }
 
 void Title::callOPScene(Ref* Sender)
 {
-	Converter converter;
+	/*Converter converter;
 	SimpleAudioEngine::getInstance()
 		->playEffect(converter.replaceString2Char(F_SE + START_VOICE + TYPE_MP3));
 	characterImageChange();
-	Director::getInstance()->replaceScene(TransitionFade::create(3.0f, Introduction::createScene(), Color3B::BLACK));
+	Director::getInstance()->replaceScene(TransitionFade::create(3.0f, Introduction::createScene(), Color3B::BLACK));*/
 }
 
 void Title::callCreditScene(Ref* Sender)
 {
-	Converter converter;
-	auto seName = converter.replaceString2Char(F_SE + BUTTON_SE + TYPE_MP3);
-	SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-	SimpleAudioEngine::getInstance()->playEffect(seName);
-	characterImageChange();
-	Director::getInstance()->replaceScene(TransitionFade::create(2.0f, Credit::createScene(), Color3B::WHITE));
+	//Converter converter;
+	//auto seName = converter.replaceString2Char(F_SE + BUTTON_SE + TYPE_MP3);
+	//SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+	//SimpleAudioEngine::getInstance()->playEffect(seName);
+	//characterImageChange();
+	//Director::getInstance()->replaceScene(TransitionFade::create(2.0f, Credit::createScene(), Color3B::WHITE));
 }
 
 void Title::closeGame(Ref* sender)
 {
 	SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 	Director::getInstance()->purgeCachedData();//キャッシュ開放
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	Converter converter;
-	converter.replaceALLMP3toDAT();
-#endif
 	Director::getInstance()->end();
 }

@@ -10,6 +10,8 @@ const std::string PNG = ".png";
 #pragma region フォルダ
 const std::string FONTS_FOLDER = "fonts/";
 const std::string SE_FOLDER = "se/";
+const std::string TEXT_FOLDER = "text/";
+const std::string IMAGE_FOLDER = "img/";
 #pragma endregion
 
 #pragma region フォント
@@ -18,5 +20,18 @@ const std::string JPN_FONT = "HGRPP1.TTC";
 #pragma endregion
 
 #pragma region SEファイル
-const std::string LOGO_SE = "Logo.mp3";
+const std::string LOGO_SE = "Logo";
+#pragma endregion
+
+#pragma region 画像ファイル
+const std::string ROOM = "room";
+const std::string YUKARI = "yukari";
+const std::string START = "start";
+const std::string END = "end";
+const std::string CREDIT = "credit";
+#pragma endregion
+
+#pragma region テキストファイル
+const std::string LOGO_TEXT = "logo";
+const std::string TITLE_TEXT = "title";
 #pragma endregion
