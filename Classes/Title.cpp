@@ -3,6 +3,8 @@
 #include "SimpleAudioEngine.h"
 #include "StringResouce.h"
 #include "GenericFunction.h"
+#include "Converter.h"
+#include "LoadScene.h"
 
 using namespace CocosDenshion;
 USING_NS_CC;
@@ -38,6 +40,7 @@ bool Title::init()
 	auto titleText = FileUtils::getInstance()->getStringFromFile(TEXT_FOLDER + TITLE_TEXT + TXT);
 	auto titleLabel = Label::createWithTTF(titleText, FONTS_FOLDER + JPN_FONT, 24);
 	titleLabel->setScale(directer->getContentScaleFactor());
+	CCLOG("getScaleFactor:%f", directer->getContentScaleFactor());
 	titleLabel->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - titleLabel->getContentSize().height*2);
 	titleLabel->setColor(Color3B::BLACK);
 	this->addChild(titleLabel, 4);
@@ -123,6 +126,10 @@ void Title::characterImageChange()
 
 void Title::callOPScene(Ref* Sender)
 {
+	auto con = new Converter;
+	auto gameSpeed = con->replaceString2Char(GAME_SPEED);
+	UserDefault::getInstance()->setFloatForKey(gameSpeed, 0.1f);//ゲーム速度の初期化
+	Director::getInstance()->replaceScene(LoadScene::createScene());
 	/*Converter converter;
 	SimpleAudioEngine::getInstance()
 		->playEffect(converter.replaceString2Char(F_SE + START_VOICE + TYPE_MP3));

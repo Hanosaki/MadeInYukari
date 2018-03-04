@@ -21,6 +21,9 @@ const std::string JPN_FONT = "HGRPP1.TTC";
 
 #pragma region SEファイル
 const std::string LOGO_SE = "Logo";
+const std::string CURTAIN_SE = "curtain";
+const std::string CLEAR_SE = "clear";
+const std::string MISS_SE = "miss";
 #pragma endregion
 
 #pragma region 画像ファイル
@@ -34,4 +37,8 @@ const std::string CREDIT = "credit";
 #pragma region テキストファイル
 const std::string LOGO_TEXT = "logo";
 const std::string TITLE_TEXT = "title";
+#pragma endregion
+
+#pragma region データ保存用のkey
+const std::string GAME_SPEED = "gameSpeed";
 #pragma endregion

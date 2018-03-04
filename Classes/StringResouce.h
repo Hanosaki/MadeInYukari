@@ -24,6 +24,9 @@ extern const std::string JPN_FONT;
 
 #pragma region SEファイル
 extern const std::string LOGO_SE;
+extern const std::string CURTAIN_SE;
+extern const std::string CLEAR_SE;
+extern const std::string MISS_SE;
 #pragma endregion
 
 #pragma region 画像ファイル
@@ -37,6 +40,10 @@ extern const std::string CREDIT;
 #pragma region テキストファイル
 extern const std::string LOGO_TEXT;
 extern const std::string TITLE_TEXT;
+#pragma endregion
+
+#pragma region データ保存用のkey
+extern const std::string GAME_SPEED;
 #pragma endregion
 
 #endif
