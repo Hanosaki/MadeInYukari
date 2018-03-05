@@ -25,6 +25,7 @@ bool selectGame::init()
 	visibleSize = director->getVisibleSize();
 	origin = director->getVisibleOrigin();
 	isNnoTouch = true;
+	isCleared = false;
 	limit = 6;
 
 	auto generilFunc = new GenericFunc;
@@ -89,6 +90,12 @@ bool selectGame::init()
 
 	this->schedule(schedule_selector(selectGame::countTimer), 1.0f);
 
+	auto timeLabel = Label::createWithTTF(StringUtils::toString(limit), FONTS_FOLDER + ENG_FONT, 128);
+	timeLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+	timeLabel->setPosition(origin.x + visibleSize.width/3, origin.y + 3*visibleSize.height/4);
+	timeLabel->setTag(4);
+	timeLabel->setColor(Color3B::BLACK);
+	this->addChild(timeLabel);
 	return true;
 
 }
@@ -102,6 +109,7 @@ bool selectGame::onTouchBegan(Touch* touch, Event* event)
 
 	if (location.y <= origin.y + visibleSize.height / 2 && isNnoTouch)
 	{
+		isNnoTouch = false;
 		#pragma region ”»’è
 		switch (num)
 		{
@@ -139,7 +147,6 @@ bool selectGame::onTouchBegan(Touch* touch, Event* event)
 			break;
 		}
 		#pragma endregion
-		isNnoTouch = false;
 	}
 
 	return true;
@@ -152,15 +159,9 @@ void selectGame::succces()
 	Sprite* curtain[4];
 	auto genericFunc = new GenericFunc;
 	genericFunc->setOpendCurtain(curtain);
-	auto scale = curtain[0]->getScale();
-	for (int i = 0; i < 4; ++i)
-	{
-		this->addChild(curtain[i], 1);
-		if (i < 2)
-			curtain[i]->runAction(MoveTo::create(2.0f, Vec2(0 + curtain[i]->getContentSize().width*scale*i, curtain[i]->getPositionY())));
-		else
-			curtain[i]->runAction(MoveTo::create(2.0f, Vec2(curtain[i]->getPosition().x - curtain[i]->getContentSize().width*scale*(i-1), curtain[i]->getPositionY())));
-	}
+	addCurtains(curtain);
+	genericFunc->moveCurtainClose(curtain);
+	isCleared = true;
 }
 
 void selectGame::failed()
@@ -169,24 +170,47 @@ void selectGame::failed()
 	Sprite* curtain[4];
 	auto genericFunc = new GenericFunc;
 	genericFunc->setOpendCurtain(curtain);
-	auto scale = curtain[0]->getScale();
-	for (int i = 0; i < 4; ++i)
+	addCurtains(curtain);
+	genericFunc->moveCurtainClose(curtain);
+	if (isNnoTouch)
 	{
-		this->addChild(curtain[i], 1);
-		if (i < 2)
-			curtain[i]->runAction(MoveTo::create(3.0f, Vec2(0 + curtain[i]->getContentSize().width*scale*i, curtain[i]->getPositionY())));
-		else
-			curtain[i]->runAction(MoveTo::create(3.0f, Vec2(curtain[i]->getPosition().x - curtain[i]->getContentSize().width*scale*(i - 1), curtain[i]->getPositionY())));
+		isNnoTouch = false;
+		this->scheduleOnce(schedule_selector(selectGame::failedEnd), 2.0f);
 	}
 
+
+}
+
+void selectGame::addCurtains(Sprite* curtain[4])
+{
+	for each (auto item in curtain)
+	{
+		this->addChild(item);
+	}
 }
 
 void selectGame::countTimer(float dt)
 {
 	if (limit > 0)
+	{
 		--limit;
+		auto timeLabel = (Label*)this->getChildByTag(4);
+		timeLabel->setString(StringUtils::toString(limit));
+	}
 	else
 	{
-		Director::getInstance()->replaceScene(LoadScene::createScene());
+		if (isCleared)
+			Director::getInstance()->replaceScene(LoadScene::createScene());
+		else if(!isNnoTouch)
+			Director::getInstance()->replaceScene(LoadScene::createScene());
+		else
+			failed();
+
+		this->unschedule(schedule_selector(selectGame::countTimer));
 	}
+}
+
+void selectGame::failedEnd(float dt)//ŽžŠÔØ‚ê‚È‚Ç‚ÅŽ¸”s‚µ‚½Û‚Ìˆ—
+{
+	Director::getInstance()->replaceScene(LoadScene::createScene());
 }

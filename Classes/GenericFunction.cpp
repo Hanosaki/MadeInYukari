@@ -114,3 +114,15 @@ void GenericFunc::setOpendCurtain(Sprite* curtain[4])
 		curtain[i]->setTag(1 + i);
 	}
 }
+
+void GenericFunc::moveCurtainClose(Sprite* curtain[4])
+{
+	auto scale = curtain[0]->getScale();
+	for (int i = 0; i < 4; ++i)
+	{
+		if (i < 2)
+			curtain[i]->runAction(MoveTo::create(0.75f, Vec2(0 + curtain[i]->getContentSize().width*scale*i, curtain[i]->getPositionY())));
+		else
+			curtain[i]->runAction(MoveTo::create(0.75f, Vec2(curtain[i]->getPosition().x - curtain[i]->getContentSize().width*scale*(i - 1), curtain[i]->getPositionY())));
+	}
+}

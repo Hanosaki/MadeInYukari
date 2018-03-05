@@ -12,6 +12,7 @@ public:
 	cocos2d::Sprite* createSpriteWithRect(cocos2d::Rect rect, float x, float y, cocos2d::Vec2 anchor, cocos2d::Color3B color, int tag);
 	void setCurtain(cocos2d::Sprite* curtain[4]);
 	void setOpendCurtain(cocos2d::Sprite* curtain[4]);
+	void moveCurtainClose(cocos2d::Sprite* curtain[4]);
 
 };
 
