@@ -6,10 +6,10 @@
 #include "Converter.h"
 #include "AudioEngine.h"
 #include "SelectGame.h"
+#include "GenericFunction.h"
 
 USING_NS_CC;
 
-using namespace CocosDenshion;
 using namespace experimental;
 
 Scene* nextScene(int gameNumber);
@@ -45,17 +45,10 @@ bool LoadScene::init()
 	AudioEngine::setFinishCallback(seId,CC_CALLBACK_0(LoadScene::callGamePart,this)); 
 
 	Sprite* curtain[4];//画面カーテン設置
+	auto genericFunc = new GenericFunc;
+	genericFunc->setCurtain(curtain);
 	for (int i = 0; i < 4; ++i)
 	{
-		curtain[i] = Sprite::create(IMAGE_FOLDER + CURTAIN + PNG);
-		auto scale = visibleSize.width / 4 / curtain[i]->getContentSize().width;
-		curtain[i]->setScale(scale);
-		curtain[i]->setAnchorPoint(Vec2::ANCHOR_MIDDLE_LEFT);
-		curtain[i]->setPosition(
-			curtain[i]->getContentSize().width * scale * i,
-			origin.y + visibleSize.height / 2);
-		curtain[i]->setTag(1 + i);
-
 		switch (i)//表示優先順位の設定(真ん中の二枚が上になるように)
 		{
 		case 1:
@@ -69,6 +62,30 @@ bool LoadScene::init()
 			break;
 		}
 	}
+	//for (int i = 0; i < 4; ++i)
+	//{
+	//	curtain[i] = Sprite::create(IMAGE_FOLDER + CURTAIN + PNG);
+	//	auto scale = visibleSize.width / 4 / curtain[i]->getContentSize().width;
+	//	curtain[i]->setScale(scale);
+	//	curtain[i]->setAnchorPoint(Vec2::ANCHOR_MIDDLE_LEFT);
+	//	curtain[i]->setPosition(
+	//		curtain[i]->getContentSize().width * scale * i,
+	//		origin.y + visibleSize.height / 2);
+	//	curtain[i]->setTag(1 + i);
+
+	//	switch (i)//表示優先順位の設定(真ん中の二枚が上になるように)
+	//	{
+	//	case 1:
+	//		this->addChild(curtain[i], 1);
+	//		break;
+	//	case 2:
+	//		this->addChild(curtain[i], 1);
+	//		break;
+	//	default:
+	//		this->addChild(curtain[i]);
+	//		break;
+	//	}
+	//}
 	this->scheduleOnce(schedule_selector(LoadScene::animation), 3.0f);
 
 	return true;

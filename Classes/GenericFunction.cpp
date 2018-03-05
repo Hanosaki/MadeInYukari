@@ -64,3 +64,53 @@ Vec2 GenericFunc::setWindowCenter(Size visibleSize, Vec2 origin)
 {
 	return Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y);
 }
+
+void GenericFunc::setCurtain(Sprite* curtain[4])
+{
+	auto director = Director::getInstance();
+	auto visibleSize = director->getVisibleSize();
+	auto origin = director->getVisibleOrigin();
+	for (int i = 0; i < 4; ++i)
+	{
+		curtain[i] = Sprite::create(IMAGE_FOLDER + CURTAIN + PNG);
+		auto scale = visibleSize.width / 4 / curtain[i]->getContentSize().width;
+		curtain[i]->setScale(scale);
+		curtain[i]->setAnchorPoint(Vec2::ANCHOR_MIDDLE_LEFT);
+		curtain[i]->setPosition(
+			curtain[i]->getContentSize().width * scale * i,
+			origin.y + visibleSize.height / 2);
+		curtain[i]->setTag(1 + i);
+	}
+}
+
+void GenericFunc::setOpendCurtain(Sprite* curtain[4])
+{
+	auto director = Director::getInstance();
+	auto visibleSize = director->getVisibleSize();
+	auto origin = director->getVisibleOrigin();
+	for (int i = 0; i < 4; ++i)
+	{
+		if (i < 2)
+		{
+			curtain[i] = Sprite::create(IMAGE_FOLDER + CURTAIN + PNG);
+			auto scale = visibleSize.width / 4 / curtain[i]->getContentSize().width;
+			curtain[i]->setScale(scale);
+			curtain[i]->setAnchorPoint(Vec2::ANCHOR_MIDDLE_LEFT);
+			curtain[i]->setPosition(
+				0-curtain[i]->getContentSize().width * scale,
+				origin.y + visibleSize.height / 2);
+		}
+		else
+		{
+			curtain[i] = Sprite::create(IMAGE_FOLDER + CURTAIN + PNG);
+			auto scale = visibleSize.width / 4 / curtain[i]->getContentSize().width;
+			curtain[i]->setScale(scale);
+			curtain[i]->setAnchorPoint(Vec2::ANCHOR_MIDDLE_LEFT);
+			curtain[i]->setPosition(
+				origin.x + visibleSize.width,
+				origin.y + visibleSize.height / 2);
+
+		}
+		curtain[i]->setTag(1 + i);
+	}
+}

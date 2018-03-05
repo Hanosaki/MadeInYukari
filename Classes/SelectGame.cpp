@@ -1,8 +1,12 @@
 #include "SelectGame.h"
 #include "StringResouce.h"
 #include "GenericFunction.h"
+#include "LoadScene.h"
+#include "AudioEngine.h"
 
 USING_NS_CC;
+
+using namespace experimental;
 
 Scene* selectGame::createScene()
 {
@@ -18,8 +22,10 @@ bool selectGame::init()
 		return false;
 
 	auto director = Director::getInstance();
-	auto visibleSize = director->getVisibleSize();
-	auto origin = director->getVisibleOrigin();
+	visibleSize = director->getVisibleSize();
+	origin = director->getVisibleOrigin();
+	isNnoTouch = true;
+	limit = 6;
 
 	auto generilFunc = new GenericFunc;
 
@@ -29,7 +35,7 @@ bool selectGame::init()
 
 	Sprite* question;
 	srand((unsigned int)time(NULL));
-	auto num = rand() % 3;
+	num = rand() % 3;
 	std::string hoge;
 	switch (num)//‚¨‘è‚ðƒ‰ƒ“ƒ_ƒ€‚ÅŒˆ’è
 	{
@@ -77,6 +83,110 @@ bool selectGame::init()
 	ans3->setPosition(rightBox->getContentSize() / 2);
 	rightBox->addChild(ans3);
 
+	auto listner = EventListenerTouchOneByOne::create();
+	listner->onTouchBegan = CC_CALLBACK_2(selectGame::onTouchBegan, this);
+	director->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listner, this);
+
+	this->schedule(schedule_selector(selectGame::countTimer), 1.0f);
+
 	return true;
 
+}
+
+bool selectGame::onTouchBegan(Touch* touch, Event* event)
+{
+	auto leftBox = this->getChildByTag(1)->getBoundingBox();
+	auto middleBox = this->getChildByTag(2)->getBoundingBox();
+	auto rightBox = this->getChildByTag(3)->getBoundingBox();
+	auto location = touch->getLocation();
+
+	if (location.y <= origin.y + visibleSize.height / 2 && isNnoTouch)
+	{
+		#pragma region ”»’è
+		switch (num)
+		{
+		case 0:
+			if (leftBox.containsPoint(location))
+			{
+				succces();
+			}
+			else
+			{
+				failed();
+			}
+			break;
+		case 1:
+			if (middleBox.containsPoint(location))
+			{
+				succces();
+			}
+			else
+			{
+				failed();
+			}
+			break;
+		case 2:
+			if (rightBox.containsPoint(location))
+			{
+				succces();
+			}
+			else
+			{
+				failed();
+			}
+			break;
+		default:
+			break;
+		}
+		#pragma endregion
+		isNnoTouch = false;
+	}
+
+	return true;
+
+}
+
+void selectGame::succces()
+{
+	AudioEngine::play2d(SE_FOLDER + CLEAR_SE + MP3, false, 0.5f, nullptr);
+	Sprite* curtain[4];
+	auto genericFunc = new GenericFunc;
+	genericFunc->setOpendCurtain(curtain);
+	auto scale = curtain[0]->getScale();
+	for (int i = 0; i < 4; ++i)
+	{
+		this->addChild(curtain[i], 1);
+		if (i < 2)
+			curtain[i]->runAction(MoveTo::create(2.0f, Vec2(0 + curtain[i]->getContentSize().width*scale*i, curtain[i]->getPositionY())));
+		else
+			curtain[i]->runAction(MoveTo::create(2.0f, Vec2(curtain[i]->getPosition().x - curtain[i]->getContentSize().width*scale*(i-1), curtain[i]->getPositionY())));
+	}
+}
+
+void selectGame::failed()
+{
+	AudioEngine::play2d(SE_FOLDER + MISS_SE + MP3, false, 0.5f, nullptr);
+	Sprite* curtain[4];
+	auto genericFunc = new GenericFunc;
+	genericFunc->setOpendCurtain(curtain);
+	auto scale = curtain[0]->getScale();
+	for (int i = 0; i < 4; ++i)
+	{
+		this->addChild(curtain[i], 1);
+		if (i < 2)
+			curtain[i]->runAction(MoveTo::create(3.0f, Vec2(0 + curtain[i]->getContentSize().width*scale*i, curtain[i]->getPositionY())));
+		else
+			curtain[i]->runAction(MoveTo::create(3.0f, Vec2(curtain[i]->getPosition().x - curtain[i]->getContentSize().width*scale*(i - 1), curtain[i]->getPositionY())));
+	}
+
+}
+
+void selectGame::countTimer(float dt)
+{
+	if (limit > 0)
+		--limit;
+	else
+	{
+		Director::getInstance()->replaceScene(LoadScene::createScene());
+	}
 }
