@@ -5,6 +5,7 @@
 #include "StringResouce.h"
 #include "Converter.h"
 #include "AudioEngine.h"
+#include "SelectGame.h"
 
 USING_NS_CC;
 
@@ -83,10 +84,10 @@ void LoadScene::selectGame()
 	switch (gameNumber)//次に実行するシーンをランダムで決める(予定)
 	{
 	case 0:
-		gameTitle = file->getStringFromFile("selectGame/title.txt");
+		gameTitle = file->getStringFromFile(SELECT_GAME_FOLDER + TITLE_TEXT + TXT);
 		break;
 	case 1:
-		gameTitle = file->getStringFromFile("selectGame/title.txt");
+		gameTitle = file->getStringFromFile(SELECT_GAME_FOLDER + TITLE_TEXT + TXT);
 		break;
 	default:
 		break;
@@ -104,6 +105,10 @@ void LoadScene::animation(float dt)
 	auto rightCurtain2 = (Sprite*)this->getChildByTag(4);
 	auto rightSeq = Sequence::create(MoveTo::create(1.0f, rightCurtain2->getPosition()), DelayTime::create(1.0f), ScaleTo::create(25.0f, 3.0f), NULL);
 	rightCurtain->runAction(rightSeq);
+	auto label = (Label*)this->getChildByTag(5);
+	auto labelSeq = Sequence::create(DelayTime::create(2.0f), ScaleTo::create(25.0f, 3.0f), NULL);
+	label->runAction(labelSeq);
+
 }
 
 void LoadScene::callGamePart()
@@ -117,9 +122,9 @@ Scene* nextScene(int gameNumber)
 	switch (gameNumber)
 	{
 	case 0:
-		next = Title::createScene(); break;
+		next = selectGame::createScene(); break;
 	case 1:
-		next = Title::createScene(); break;
+		next = selectGame::createScene(); break;
 	default:
 		break;
 	}

@@ -34,6 +34,9 @@ const std::string YUKARI = "yukari";
 const std::string START = "start";
 const std::string END = "end";
 const std::string CREDIT = "credit";
+const std::string RUN = "run";
+const std::string JUMP = "jump";
+const std::string DAMAGE = "damage";
 #pragma endregion
 
 #pragma region テキストファイル

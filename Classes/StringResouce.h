@@ -37,6 +37,9 @@ extern const std::string YUKARI;
 extern const std::string START;
 extern const std::string END;
 extern const std::string CREDIT;
+extern const std::string RUN;
+extern const std::string JUMP;
+extern const std::string DAMAGE;
 #pragma endregion
 
 #pragma region テキストファイル
