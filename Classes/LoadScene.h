@@ -12,11 +12,11 @@ public:
 	CREATE_FUNC(LoadScene);
 	
 	void loadResouce();
-	void callGamePart(cocos2d::Scene* scene);
-	void update(float dt);
+	void callGamePart();
 	void selectGame();
+	void animation(float dt);
 
-	int seId;
+	int seId,gameNumber;
 
 };
 

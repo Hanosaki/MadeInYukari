@@ -38,7 +38,7 @@ bool Title::init()
 
 #pragma region タイトル表記
 	auto titleText = FileUtils::getInstance()->getStringFromFile(TEXT_FOLDER + TITLE_TEXT + TXT);
-	auto titleLabel = Label::createWithTTF(titleText, FONTS_FOLDER + JPN_FONT, 24);
+	auto titleLabel = Label::createWithTTF(titleText, FONTS_FOLDER + JPN_FONT, 64);
 	titleLabel->setScale(directer->getContentScaleFactor());
 	CCLOG("getScaleFactor:%f", directer->getContentScaleFactor());
 	titleLabel->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - titleLabel->getContentSize().height*2);

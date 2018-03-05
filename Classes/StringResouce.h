@@ -15,6 +15,7 @@ extern const std::string FONTS_FOLDER;
 extern const std::string SE_FOLDER;
 extern const std::string TEXT_FOLDER;
 extern const std::string IMAGE_FOLDER;
+extern const std::string SELECT_GAME_FOLDER;
 #pragma endregion
 
 #pragma region フォントファイル
@@ -30,6 +31,7 @@ extern const std::string MISS_SE;
 #pragma endregion
 
 #pragma region 画像ファイル
+extern const std::string CURTAIN;
 extern const std::string ROOM;
 extern const std::string YUKARI;
 extern const std::string START;

@@ -12,6 +12,7 @@ const std::string FONTS_FOLDER = "fonts/";
 const std::string SE_FOLDER = "se/";
 const std::string TEXT_FOLDER = "text/";
 const std::string IMAGE_FOLDER = "img/";
+const std::string SELECT_GAME_FOLDER = "selectGame/";
 #pragma endregion
 
 #pragma region フォント
@@ -27,6 +28,7 @@ const std::string MISS_SE = "miss";
 #pragma endregion
 
 #pragma region 画像ファイル
+const std::string CURTAIN = "curtain";
 const std::string ROOM = "room";
 const std::string YUKARI = "yukari";
 const std::string START = "start";

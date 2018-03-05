@@ -31,7 +31,7 @@ bool Splash::init()
 
 	auto logoText = FileUtils::getInstance()->getStringFromFile(TEXT_FOLDER + LOGO_TEXT + TXT);
 
-	auto logo = Label::createWithTTF(logoText,FONTS_FOLDER + JPN_FONT, 18);
+	auto logo = Label::createWithTTF(logoText,FONTS_FOLDER + JPN_FONT, 48);
 	logo->setTextColor(Color4B::WHITE);
 	logo->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
 	logo->setOpacity(0);
